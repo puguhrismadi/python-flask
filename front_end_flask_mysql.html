@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SmartSchool App</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='lib/offcanvas.css') }}">
+    <script src="{{ url_for('static',filename='lib/jquery-3.4.1.min.js') }}"></script>
+  <style type="text/css">
+  #digital-clock {
+    font-size: 17pt;  
+  }
+  </style>
+
+<script>
+    function createBarisData(nama,id,email){
+        wadah =$('#myData');
+        th ="<th>"+id+"</th>";
+        td1 ="<td>"+nama+"</td>";
+        td2 = "<td>"+email+"</td>";
+        td3= "<td></td>";
+       
+        wadah.append("<tr>"+th+td1+td2+td3+"</tr>");
+
+
+    }
+    $(document).ready(function () {
+    $.ajax({
+        url: "http://localhost:5000/show",
+        success: function (data) {
+           // $("#id").append(data[1].id);
+           // $("#content").append(data[1].name);
+            console.log(data);
+        
+           var jml = data.length;
+           for(i=0;i<jml;i++){
+               createBarisData(data[i].name,data[i].id,data[i].email);
+           }
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.responseText + "\n" + xhr.status + "\n" + thrownError);
+        }
+    });
+
+});
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+      <main role="main" class="container-fluid">
+        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+          <img class="mr-3" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+          <div class="lh-100">
+            <h6 class="mb-0 text-white lh-100">SMK Taruna Bhakti</h6>
+            <small>App version 1.0</small>
+          </div>
+          
+        </div>
+  
+        <div class="my-3  bg-white rounded box-shadow">
+            <div class="d-flex align-items-center p-3 my-3 text-black-50 bg-blue rounded box-shadow">
+            <img class="rounded-circle" src="https://pbs.twimg.com/profile_images/831848813656616961/DvBTaOtF.jpg" alt="" width="48" height="48">
+            <div class="col-md-4 lh-100">
+                &nbsp;&nbsp;<small class="badge badge-success lh-100">Pengajar </small>
+          <h6 class="col-md-12 lh-100 "><b>Puguh Rismadi Ismail</b></h6>
+          <small>&nbsp;&nbsp;Pemrograman Web Dan Perangkat Bergerak</small>
+          </div>
+          <div class="col-md-2 lh-100">
+              <small>Nama Ruang </small>
+              <h5>Ruang RPL ADV</h5>
+          </div>
+          <div class="col-md-2 lh-100">
+              <small>Kelas </small>
+              <h5>XII RPL 1</h5>
+          </div>
+          <div class="col-md-2 lh-100">
+              <small>Waktu saat ini </small>
+              <div class="text-black digital-clock"><h5>&nbsp;&nbsp;00:00:00</h5></div>
+          </div>
+             </div>
+          
+  
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+          <div class="col-md-4">
+            <img class="rounded-circle" src="https://pbs.twimg.com/profile_images/831848813656616961/DvBTaOtF.jpg" alt="" width="150" height="150">
+            <h5>Sauqi Izzatul </h5>
+            <small>Siswa </small>
+            <small>Masuk Kelas Pukul  </small>
+            <small>07.00 Wib </small>
+          </div>
+        </div>
+      </main>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>$(function () {
+    'use strict'
+  
+    $('[data-toggle="offcanvas"]').on('click', function () {
+      $('.offcanvas-collapse').toggleClass('open')
+    })
+  })</script>
+  <script>
+    $(document).ready(function() {
+  clockUpdate();
+  setInterval(clockUpdate, 1000);
+})
+
+  function clockUpdate() {
+  var date = new Date();
+  $('.digital-clock').css({'color': '#000'});
+  function addZero(x) {
+    if (x < 10) {
+      return x = '0' + x;
+    } else {
+      return x;
+    }
+  }
+
+  function twelveHour(x) {
+    if (x > 12) {
+      return x = x - 12;
+    } else if (x == 0) {
+      return x = 12;
+    } else {
+      return x;
+    }
+  }
+
+  var h = addZero(twelveHour(date.getHours()));
+  var m = addZero(date.getMinutes());
+  var s = addZero(date.getSeconds());
+
+  $('.digital-clock').text(h + ':' + m + ':' + s)
+}
+  
+  </script>
+ 
+</html>
